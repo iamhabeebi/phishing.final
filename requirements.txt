@@ -6,6 +6,7 @@ click==8.1.7
 colorama==0.4.6
 cryptography==43.0.3
 Flask==3.1.0
+flask-cors==5.0.1
 gunicorn==23.0.0
 idna==3.10
 itsdangerous==2.2.0

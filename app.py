@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
 import joblib
 import os
 import pandas as pd
@@ -6,6 +7,7 @@ import re
 import numpy as np
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all requests
 
 # ✅ Path to the model file
 MODEL_PATH = "optimized_phishing_model_fixed.pkl"
