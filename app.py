@@ -71,6 +71,7 @@ def home():
     return "Phishing Detection API is Running!"
 
 @app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
@@ -82,6 +83,10 @@ def predict():
         # Extract features
         features = extract_features(url)
         feature_df = pd.DataFrame([features])
+
+        # ✅ Debugging: Print model expected features and extracted features
+        print("Model expects these features:", model.feature_names_in_)
+        print("Extracted features:", list(features.keys()))
 
         # Ensure feature names match model training data
         model_features = model.feature_names_in_
@@ -102,9 +107,4 @@ def predict():
     except Exception as e:
         print(f"Error during prediction: {e}")
         return jsonify({"error": "Internal Server Error", "message": str(e)}), 500
-
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
-
 
