@@ -25,7 +25,7 @@ except Exception as e:
 def extract_features(url):
     domain = re.sub(r"https?://", "", url).split("/")[0]
     path = url.split("/", 3)[-1] if "/" in url else ""
-    
+
     # Feature extraction logic
     features = {
         "having_IP": 1 if re.search(r'\d+\.\d+\.\d+\.\d+', url) else 0,
@@ -33,7 +33,7 @@ def extract_features(url):
         "url_depth": url.count('/'),
         "redirection": 1 if "//" in url[7:] else 0,
         "https_domain": 1 if url.startswith("https") else 0,
-        "tiny_URL": 1 if len(domain) < 10 else 0,  # Approximate check for short domains
+        "tiny_URL": 1 if len(domain) < 10 else 0,
         "prefix_suffix": 1 if "-" in domain else 0,
         "url_length": len(url),
         "hostname_length": len(domain),
@@ -71,7 +71,6 @@ def home():
     return "Phishing Detection API is Running!"
 
 @app.route('/predict', methods=['POST'])
-@app.route('/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
@@ -108,3 +107,7 @@ def predict():
         print(f"Error during prediction: {e}")
         return jsonify({"error": "Internal Server Error", "message": str(e)}), 500
 
+# ✅ Fix: Ensure Flask uses port 10000
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 10000))  # Force Flask to use port 10000
+    app.run(host="0.0.0.0", port=port, debug=True)
